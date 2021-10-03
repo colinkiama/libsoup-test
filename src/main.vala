@@ -1,8 +1,10 @@
 using NoodleSoup;
 
 public static int main (string[] args) {
-    InetAddress localHostAddress = new InetAddress.from_bytes ({127, 0, 0, 1}, SocketFamily.IPV4);
-    InetSocketAddress socketAddress = new InetSocketAddress (localHostAddress, 8080);
+    InetAddress localHostAddress = new InetAddress.from_bytes ({127, 0, 0, 1}, 
+                                    SocketFamily.IPV4);
+    InetSocketAddress socketAddress = new InetSocketAddress (localHostAddress,
+                                                             8088);
     
     try {
         MainLoop loop = new MainLoop ();
