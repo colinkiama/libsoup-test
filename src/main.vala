@@ -10,6 +10,8 @@ public static int main (string[] args) {
         MainLoop loop = new MainLoop ();
 
         NoodleSoupServer server = new NoodleSoupServer ();
+        // 0 is used as the value for the server listen option parameter
+        // because there isn't a defined enum for no options.
         server.listen (socketAddress, 0);
 
         loop.run ();
