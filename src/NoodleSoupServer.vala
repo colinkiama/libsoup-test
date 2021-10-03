@@ -23,6 +23,11 @@ namespace NoodleSoup {
 			this.add_handler (null, default_handler);
 		}
 
+		// How handlers work:
+		// 1. Read request data from message
+		// 2. Add response data to the same message
+		// 3. The response will be automatically sent back to the sender.
+
 		private static void default_handler (Soup.Server server, 
 				Soup.Message msg, string path, GLib.HashTable? query, 
 				Soup.ClientContext client) {
@@ -32,7 +37,8 @@ namespace NoodleSoup {
 			print ("Default handler start (%u)\n", id);
 
 			if (msg.method == "OPTIONS") {
-				
+				// Simulate asynchronous input / time consuming operations:
+				// See GLib.IOSchedulerJob for time consuming operations
 				Timeout.add_seconds (0, () => {
 					print ("Handling OPTIONS method");
 
@@ -49,12 +55,11 @@ namespace NoodleSoup {
 			else {
 				msg.got_body.connect (default_handler_got_body);
 
-
 				// Simulate asynchronous input / time consuming operations:
 				// See GLib.IOSchedulerJob for time consuming operations
 				Timeout.add_seconds (0, () => {
 					add_cors_headers (msg);
-					
+
 					string html_head = "<head><title>Index</title></head>";
 					string html_body = "<body><h1>Index:</h1></body>";
 					msg.set_response ("text/html", Soup.MemoryUse.COPY, 
